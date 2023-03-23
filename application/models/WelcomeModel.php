@@ -6,9 +6,9 @@ class WelcomeModel extends CI_Model {
   public function getAllData()
 	{
     $this->load->database();
-		// $query = $this->db->query("SELECT * From `tbl_users`");
+		// $query = $this->db->query("SELECT * From `user_tbl`");
     // $query = $this->db->get('mytable', 10, 20);
-    $query = $this->db->select('*')->limit(5)->get('tbl_users');//->where('id', $id)
+    $query = $this->db->select('*')->limit(5)->get('user_tbl');//->where('id', $id)
     $result = $query->result_array();
     return $result; 
 	}
