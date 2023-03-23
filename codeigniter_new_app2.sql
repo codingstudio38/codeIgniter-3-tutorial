@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2023 at 03:02 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Mar 23, 2023 at 01:59 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 7.4.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -71,6 +71,47 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `users_tbl`
+--
+
+CREATE TABLE `users_tbl` (
+  `id` int(11) NOT NULL,
+  `picture` varchar(250) DEFAULT NULL,
+  `name` varchar(250) DEFAULT NULL,
+  `email` varchar(250) DEFAULT NULL,
+  `email_verified` varchar(1) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `password` varchar(250) DEFAULT NULL,
+  `dob` varchar(50) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `pincode` int(6) DEFAULT NULL,
+  `postoffice` varchar(250) DEFAULT NULL,
+  `district` varchar(250) DEFAULT NULL,
+  `state` varchar(250) DEFAULT NULL,
+  `country` varchar(250) DEFAULT NULL,
+  `address` varchar(350) DEFAULT NULL,
+  `isloggedin` varchar(1) DEFAULT NULL,
+  `access` varchar(100) DEFAULT NULL,
+  `user_agent` varchar(400) DEFAULT NULL,
+  `created_at` varchar(100) DEFAULT NULL,
+  `updated_at` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users_tbl`
+--
+
+INSERT INTO `users_tbl` (`id`, `picture`, `name`, `email`, `email_verified`, `phone`, `password`, `dob`, `gender`, `pincode`, `postoffice`, `district`, `state`, `country`, `address`, `isloggedin`, `access`, `user_agent`, `created_at`, `updated_at`) VALUES
+(1, '20230323141104-33.jpg', 'Vidyut Mandal', 'vidyut.star006@gmail.com', '1', '7735501331', '$2y$10$dzMs6/gjoP5JHVmvTWIpiuYBbIXfAJGo5o5iVlz0K1RW2Mbq66/0e', '2022-04-15', 'Male', 751013, 'Regional Research Laboratory', 'Khorda', 'Odisha', 'India', 'jaydev vihar,b-2 first floor, oom graden', '0', 'approved', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36', '2022-04-15', NULL),
+(24, '20230323141104-33.jpg', 'Bidyut Polosoft', 'administrator@gmail.com', NULL, '7735501335', '$2y$10$aCo7xRnOi/QgFa1.WuN5bOCXu6ZU2wCBDCOL5EIFq9NjXoKeIUb2C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(26, '20230323141104-33.jpg', 'Bidyut ', 'administrator12@gmail.com', NULL, '7735501131', '$2y$10$aCo7xRnOi/QgFa1.WuN5bOCXu6ZU2wCBDCOL5EIFq9NjXoKeIUb2C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(27, '20230323141104-33.jpg', 'Vidyut', 'administrator212@gmail.com', NULL, '7735521131', '$2y$10$aCo7xRnOi/QgFa1.WuN5bOCXu6ZU2wCBDCOL5EIFq9NjXoKeIUb2C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(28, '20230323141104-33.jpg', 'Ashish', 'administrator211@gmail.com', NULL, '7735521111', '$2y$10$aCo7xRnOi/QgFa1.WuN5bOCXu6ZU2wCBDCOL5EIFq9NjXoKeIUb2C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(29, '20230323141104-33.jpg', 'Dhanpati', 'administrator111@gmail.com', NULL, '7735121111', '$2y$10$aCo7xRnOi/QgFa1.WuN5bOCXu6ZU2wCBDCOL5EIFq9NjXoKeIUb2C', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_login_details`
 --
 
@@ -106,42 +147,6 @@ INSERT INTO `user_login_details` (`id`, `login_id`, `logintime`, `logouttime`, `
 (16, 1, '2022-04-17 14:34:06', '2022-04-17 14:39:16', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36', '2022-04-17 09:09:16'),
 (17, 1, '2022-06-15 16:16:51', '2022-06-15 16:17:16', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36', '2022-06-15 10:47:16');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `user_tbl`
---
-
-CREATE TABLE `user_tbl` (
-  `id` int(11) NOT NULL,
-  `picture` varchar(250) DEFAULT NULL,
-  `name` varchar(250) DEFAULT NULL,
-  `email` varchar(250) DEFAULT NULL,
-  `email_verified` varchar(1) DEFAULT NULL,
-  `phone` int(10) DEFAULT NULL,
-  `password` varchar(250) DEFAULT NULL,
-  `dob` varchar(50) DEFAULT NULL,
-  `gender` varchar(10) DEFAULT NULL,
-  `pincode` int(6) DEFAULT NULL,
-  `postoffice` varchar(250) DEFAULT NULL,
-  `district` varchar(250) DEFAULT NULL,
-  `state` varchar(250) DEFAULT NULL,
-  `country` varchar(250) DEFAULT NULL,
-  `address` varchar(350) DEFAULT NULL,
-  `isloggedin` varchar(1) DEFAULT NULL,
-  `access` varchar(100) DEFAULT NULL,
-  `user_agent` varchar(400) DEFAULT NULL,
-  `created_at` varchar(100) DEFAULT NULL,
-  `updated_at` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `user_tbl`
---
-
-INSERT INTO `user_tbl` (`id`, `picture`, `name`, `email`, `email_verified`, `phone`, `password`, `dob`, `gender`, `pincode`, `postoffice`, `district`, `state`, `country`, `address`, `isloggedin`, `access`, `user_agent`, `created_at`, `updated_at`) VALUES
-(1, '749055487_1_8886.png', 'Vidyut Mandal', 'vidyut.star006@gmail.com', '1', 2147483647, '$2y$10$dzMs6/gjoP5JHVmvTWIpiuYBbIXfAJGo5o5iVlz0K1RW2Mbq66/0e', '2022-04-15', 'Male', 751013, 'Regional Research Laboratory', 'Khorda', 'Odisha', 'India', 'jaydev vihar,b-2 first floor, oom graden', '0', 'approved', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36', '2022-04-15', NULL);
-
 --
 -- Indexes for dumped tables
 --
@@ -159,15 +164,17 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users_tbl`
+--
+ALTER TABLE `users_tbl`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `phone` (`phone`);
+
+--
 -- Indexes for table `user_login_details`
 --
 ALTER TABLE `user_login_details`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_tbl`
---
-ALTER TABLE `user_tbl`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -187,16 +194,16 @@ ALTER TABLE `migrations`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `users_tbl`
+--
+ALTER TABLE `users_tbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
 -- AUTO_INCREMENT for table `user_login_details`
 --
 ALTER TABLE `user_login_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT for table `user_tbl`
---
-ALTER TABLE `user_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
