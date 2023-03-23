@@ -13,4 +13,24 @@ function show_date($date=''){
     }
   }
 
+
+function UserLoggedIn(){
+  $CI =& get_instance();
+  if(empty($CI->session->userdata('user'))){
+    $CI->session->set_flashdata('failed',"You are not logged in.");
+		redirect(base_url('/login'));
+  }
+}
+
+function UserNotLoggedIn(){
+  $CI =& get_instance();
+  if(!empty($CI->session->userdata('user'))){
+    $CI->session->set_flashdata('success',"You are already loggedin.");
+		redirect(base_url('/admin'));
+  }
+}
+
+
+
+
 ?>

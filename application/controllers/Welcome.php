@@ -17,19 +17,19 @@ class Welcome extends CI_Controller {
 		//echo show_date('d/m/Y');
 		$this->load->view('welcome_message');
 	}
- 
-	public function about($id="")
+  
+	public function about()
 	{ 
 
-		if($this->session->userdata('id') == ""){
+		// if($this->session->userdata('id') == ""){
 
-			redirect(base_url());
+		// 	redirect(base_url());
 
 			
-		}
+		// }
 		
-		 
-		$users = $this->db->getAllData();
+		  
+		$users = $this->welcome->getAllData();
 		$data = array("users"=>$users);
 		$this->load->view('mytable',$data);
 		
