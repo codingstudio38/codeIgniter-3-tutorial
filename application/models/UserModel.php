@@ -11,7 +11,7 @@ class UserModel extends CI_Model {
     return $result; 
 	}
 
-
+ 
   
   public function save($data)
 	{ 
@@ -31,7 +31,7 @@ class UserModel extends CI_Model {
 	{ 
     try {
       if(empty($id)){
-        return array("status"=>true,"email"=>"id required.");
+        return array("status"=>true,"message"=>"id required.");
       }
       $query = $this->db->query("SELECT COUNT(id) AS totalis FROM `users_tbl` WHERE `id`='$id'");
       $result = $query->row();
@@ -52,7 +52,7 @@ class UserModel extends CI_Model {
 	{ 
     try {
       if(empty($email)){
-        return array("status"=>true,"email"=>"email required.");
+        return array("status"=>true,"message"=>"email required.");
       }
       $query = $this->db->query("SELECT COUNT(id) AS totalis FROM `users_tbl` WHERE `email`='$email'");
       $result = $query->row();
@@ -67,20 +67,31 @@ class UserModel extends CI_Model {
       return array("status"=>false,"message"=>$e->getMessage());
     }
 	}
- 
+  
 
   public function DeleteById($id)
 	{ 
     try {
       if(empty($id)){
-        return array("status"=>true,"email"=>"id required.");
+        return array("status"=>true,"message"=>"id required.");
       }
       $query = $this->db->query("SELECT COUNT(id) AS totalis FROM `users_tbl` WHERE `id`='$id'");
       $result = $query->row();
       if($result->totalis >= 1){
-        $getquery = $this->db->select('*')->where('id', $id)->get('users_tbl');
-        $data = $getquery->row();
-        return array("status"=>true,"data"=>$data,"message"=>"Successfully deleted.");
+        $result = $this->findById($id);
+        $file = "";
+        if(!empty($result['data']->picture)){
+          if(file_exists( FCPATH.'uploads/'.$result['data']->picture))
+          {
+             unlink(FCPATH.'uploads/'.$result['data']->picture);
+             //unlink(__DIR__.'./../../uploads/'.$result['data']->picture)
+             $file  = "User file has been deleted.";
+          } else {
+             $file  = "User file directory not found";
+          }
+        }
+       $delete=$this->db->where('id', $id)->delete('users_tbl');
+       return array("status"=>true,"data"=>$delete,"message"=>"Successfully deleted. $file");
       } else {
         return array("status"=>false,"message"=>"Record not found.");
       } 

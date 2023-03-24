@@ -64,7 +64,7 @@ $route['userlogin'] = 'UserController/userlogin';
 $route['register'] = 'UserController/register'; 
 
 $route['saveuser'] = 'UserController/saveuser'; 
-
+  
 $route['admin'] = 'AdminController/index'; 
 $route['admin/(:any)/edit'] = 'AdminController/edit'; 
 $route['admin/(:any)/delete'] = 'AdminController/delete'; 

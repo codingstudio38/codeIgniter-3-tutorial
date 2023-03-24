@@ -18,7 +18,7 @@ class AdminController extends CI_Controller {
 		$this->load->view('mytable',$data);
 	}
 
-
+ 
 	
 	public function logout()
 	{ 
@@ -44,18 +44,29 @@ class AdminController extends CI_Controller {
 	}
 
 
-
+ 
 	public function delete()
 	{ 
 		UserLoggedIn();
-		$id=$this->uri->segment(2);
+		$loggedinuser = $this->session->userdata('user');
+		$id=$this->uri->segment(2); 
 		$result = $this->UserModel->DeleteById($id);
 		if($result['status']){
-			$this->session->set_flashdata('success',$result['message']);
+			if($loggedinuser->id==$id){
+				$this->logout();
+				// $this->session->set_userdata('user',"");
+				// unset($_SESSION['user']);
+				// $this->session->set_flashdata('success',"Your account has been deleted. Please create an account. ");
+			    // redirect(base_url('/register'));
+			} else {
+				$this->session->set_flashdata('success',$result['message']);
+			    redirect(base_url('/admin'));
+			}
 		} else {
 			$this->session->set_flashdata('failed',$result['message']);
+			redirect(base_url('/admin'));
 		}
-		redirect(base_url('/admin'));
+		
 	}
 
 	

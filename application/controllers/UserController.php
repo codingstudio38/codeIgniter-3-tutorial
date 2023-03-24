@@ -134,6 +134,7 @@ class UserController extends CI_Controller {
 						if(password_verify($password,$result['data']->password)){
 
 							$this->session->set_userdata('user',$result['data']);
+							$this->session->set_flashdata('success',"Successfully logged in.");
 							redirect(base_url('/admin'));
 
 						} else {
