@@ -26,6 +26,20 @@ class UserModel extends CI_Model {
     }
 	}
 
+  
+  public function UpdateUser($data,$id)
+	{ 
+    try {
+      if($this->db->insert('users_tbl', $data)){
+        return array("status"=>true,"lastid"=>$this->db->insert_id(),"message"=>"Successfully saved.");
+      } else {
+        return array("status"=>false,"message"=>"Failed to save data.");
+      } 
+    } catch(Exception $e) {
+      return array("status"=>false,"message"=>$e->getMessage());
+    }
+	}
+
 
   public function findById($id)
 	{ 
@@ -82,7 +96,7 @@ class UserModel extends CI_Model {
         $file = "";
         if(!empty($result['data']->picture)){
           if(file_exists( FCPATH.'uploads/'.$result['data']->picture))
-          {
+          { 
              unlink(FCPATH.'uploads/'.$result['data']->picture);
              //unlink(__DIR__.'./../../uploads/'.$result['data']->picture)
              $file  = "User file has been deleted.";
