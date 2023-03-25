@@ -69,7 +69,7 @@ class AdminController extends CI_Controller {
 			return true;
 		}
 	}
-	
+	 
 	public function updateuser()
 	{ 
 		UserLoggedIn();
@@ -82,19 +82,29 @@ class AdminController extends CI_Controller {
 			redirect(base_url('/admin'));
 		}
 		if($this->input->post()){
-
-		
+		$result_email = $this->UserModel->findByIdEmail($id,$this->input->post('email'));
+		$email_check = "";
+        if (!$result_email['status'])
+        {
+           $email_check = "|is_unique[users_tbl.email]";
+        }
+		$result_phoen = $this->UserModel->findByIdPhone($id,$this->input->post('phone'));
+		$phoen_check = "";
+        if (!$result_phoen['status'])
+        {
+           $phoen_check = "|is_unique[users_tbl.phone]";
+        }
 		$this->form_validation->set_error_delimiters('<label class="invalid">','</label>');
 		$this->form_validation->set_rules('name', 'name', 'trim|required');
-		$this->form_validation->set_rules('email', 'email', 'trim|required|valid_email|is_unique[users_tbl.email]');
-		$this->form_validation->set_rules('phone', 'phone', 'trim|required|is_unique[users_tbl.phone]');
+		$this->form_validation->set_rules('email', 'email', "trim|required|valid_email$email_check");
+		$this->form_validation->set_rules('phone', 'phone', "trim|required$phoen_check");
 		if(isset($_POST['password']) && $_POST['password']!==""){
 			$this->form_validation->set_rules('password', 'password', 'required|min_length[6]|max_length[12]');
 		}
 		
 		if(isset($_FILES[ "picture" ]) && $_FILES[ "picture" ]['name']!==""){
 			$this->form_validation->set_rules('picture', '','callback_file_check');
-		} 
+		}  
 		
 		$this->form_validation->set_message('is_unique', 'This %s already exists. Try different.');
 		$this->form_validation->set_message('min_length', '{field} minimum 6 digit');

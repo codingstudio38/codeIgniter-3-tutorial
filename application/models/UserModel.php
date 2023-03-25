@@ -28,7 +28,7 @@ class UserModel extends CI_Model {
 
   
   public function UpdateUser($data,$id)
-	{ 
+	{  
     try {
       if($this->db->insert('users_tbl', $data)){
         return array("status"=>true,"lastid"=>$this->db->insert_id(),"message"=>"Successfully saved.");
@@ -45,7 +45,7 @@ class UserModel extends CI_Model {
 	{ 
     try {
       if(empty($id)){
-        return array("status"=>true,"message"=>"id required.");
+        return array("status"=>false,"message"=>"id required.");
       }
       $query = $this->db->query("SELECT COUNT(id) AS totalis FROM `users_tbl` WHERE `id`='$id'");
       $result = $query->row();
@@ -66,7 +66,7 @@ class UserModel extends CI_Model {
 	{ 
     try {
       if(empty($email)){
-        return array("status"=>true,"message"=>"email required.");
+        return array("status"=>false,"message"=>"email required.");
       }
       $query = $this->db->query("SELECT COUNT(id) AS totalis FROM `users_tbl` WHERE `email`='$email'");
       $result = $query->row();
@@ -82,7 +82,56 @@ class UserModel extends CI_Model {
     }
 	}
   
+  public function findByIdEmail($id,$email)
+	{ 
+    try {
+      if(empty($id)){
+        return array("status"=>false,"message"=>"id required.");
+      }
+      if(empty($email)){
+        return array("status"=>false,"message"=>"email required.");
+      }
+      $query = $this->db->query("SELECT COUNT(id) AS totalis FROM `users_tbl` WHERE `id`!='$id' AND `email`='$email'");
+      $result = $query->row();
+      if($result->totalis >= 1){
+        $getquery = $this->db->select('*')->where('email', $email)->get('users_tbl');
+        $data = $getquery->row();
+        return array("status"=>false,"data"=>$data,"message"=>"Record found");
+      } else {
+        return array("status"=>true,"message"=>"Record not found.");
+      } 
+    } catch(Exception $e) {
+      return array("status"=>false,"message"=>$e->getMessage());
+    }
+	}
 
+  
+
+  public function findByIdPhone($id,$phone)
+	{ 
+    try {
+      if(empty($id)){
+        return array("status"=>false,"message"=>"id required.");
+      }
+      if(empty($phone)){
+        return array("status"=>false,"message"=>"phone no required.");
+      }
+      $query = $this->db->query("SELECT COUNT(id) AS totalis FROM `users_tbl` WHERE `id`!='$id' AND `phone`='$phone'");
+      $result = $query->row();
+      if($result->totalis >= 1){
+        $getquery = $this->db->select('*')->where('phone', $phone)->get('users_tbl');
+        $data = $getquery->row();
+        return array("status"=>false,"data"=>$data,"message"=>"Record found");
+      } else {
+        return array("status"=>true,"message"=>"Record not found.");
+      } 
+    } catch(Exception $e) {
+      return array("status"=>false,"message"=>$e->getMessage());
+    }
+	}
+
+  
+  
   public function DeleteById($id)
 	{ 
     try {
