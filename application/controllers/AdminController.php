@@ -73,6 +73,7 @@ class AdminController extends CI_Controller {
 	public function updateuser()
 	{ 
 		UserLoggedIn();
+		$loggedinuser = $this->session->userdata('user');
 		$id=$this->uri->segment(2);
 		$user = $this->UserModel->findById($id);
 		
@@ -152,12 +153,15 @@ class AdminController extends CI_Controller {
 							}
 						}
 					}
+					if($loggedinuser->id==$id){
+						$this->logout();
+					}
 					$this->session->set_flashdata('success',$update['message']." ".$file);
 					redirect(base_url('/admin'));
 				} else {
 					$this->session->set_flashdata('failed',$update['message']." ".$file);
 					redirect(base_url('/admin'));
-				}
+				} 
 			}
 		} else {
 
