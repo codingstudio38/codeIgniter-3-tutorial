@@ -211,8 +211,10 @@ class UserController extends CI_Controller {
 			$this->form_validation->set_rules('password', 'password', 'required');
 			
 				if ($this->form_validation->run() == FALSE) {
-	
-					$this->load->view('login');
+					$loginbutton = $this->google_client->createAuthUrl();
+					$fbloginbutton = $this->facebook_helper->getLoginUrl(base_url('/') . 'login-with-facebook', array("email"));
+					$data = array("loginbutton"=>$loginbutton,"fbloginbutton"=>$fbloginbutton);
+					$this->load->view('login',$data);
 	
 				} else {
 
