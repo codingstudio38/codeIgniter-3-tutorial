@@ -74,11 +74,12 @@ class AdminController extends CI_Controller {
 	{ 
 		UserLoggedIn();
 		$id=$this->uri->segment(2);
-		$result = $this->UserModel->findById($id);
-		if($result['status']){
-			$user = array("users"=>$result);
+		$user = $this->UserModel->findById($id);
+		
+		if($user['status']){
+			$userdata = array("users"=>$user);
 		} else {
-			$this->session->set_flashdata('failed',$result['message']);
+			$this->session->set_flashdata('failed',$user['message']);
 			redirect(base_url('/admin'));
 		}
 		if($this->input->post()){
@@ -112,27 +113,51 @@ class AdminController extends CI_Controller {
 		
 			if ($this->form_validation->run() == FALSE) {
 
-				$this->load->view('edit',$user);
+				$this->load->view('edit',$userdata);
 
 			} else {
-				
-				if(isset($_POST['password']) && $_POST['password']!==""){
-					$data = array(
-						'name' => $this->input->post('name'),
-						'email' => $this->input->post('email'),
-						'phone' => $this->input->post('phone'),
-						'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT)
-					);
-				} else{
-					$data = array(
-						'name' => $this->input->post('name'),
-						'email' => $this->input->post('email'),
-						'phone' => $this->input->post('phone')
-					);
+				$newfile_name="";
+				$file="";
+				if(isset($_FILES[ "picture" ]) && $_FILES[ "picture" ]['name']!==""){
+					$file_name = $_FILES[ "picture" ][ "name" ];
+					$file_type = $_FILES[ "picture" ][ "type" ];
+					$file_tmpname = $_FILES[ 'picture' ][ 'tmp_name' ];
+					$file_size = $_FILES[ "picture" ][ "size" ];
+					$file_extension = pathinfo( $file_name, PATHINFO_EXTENSION );
+					$newfile_name=date("YmdHis")."-".rand(10,100).".$file_extension";
+					if (!move_uploaded_file($file_tmpname, FCPATH.'uploads/'.$newfile_name)) {
+						$newfile_name="";
+						$file="Failed to movie file.";
+					}
 				}
-				print_r($data);exit;
-				$result = $this->UserModel->UpdateUser($data,$id);
-			
+				$data['name']=$this->input->post('name');
+				$data['email']=$this->input->post('email');
+				$data['phone']=$this->input->post('phone');
+				if(isset($_POST['password']) && $_POST['password']!==""){
+					$data['password']=password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+				} 
+				if(!empty($newfile_name)){
+					$data['picture']=$newfile_name;
+				}
+				$update = $this->UserModel->UpdateUser($data,$id);
+				if($update['status']){
+					if(!empty($newfile_name)){
+						if(!empty($user['data']->picture)){
+							if(file_exists( FCPATH.'uploads/'.$user['data']->picture))
+							{ 
+								unlink(FCPATH.'uploads/'.$user['data']->picture);
+								$file  = "New file successfully uploaded. User old file has been deleted.";
+							} else {
+								$file  = "New file successfully uploaded. User old file directory not found.";
+							}
+						}
+					}
+					$this->session->set_flashdata('success',$update['message']." ".$file);
+					redirect(base_url('/admin'));
+				} else {
+					$this->session->set_flashdata('failed',$update['message']." ".$file);
+					redirect(base_url('/admin'));
+				}
 			}
 		} else {
 

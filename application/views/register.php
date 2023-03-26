@@ -10,15 +10,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <title>CodeIgniter 3 || Register Page</title>
     <?php include('css_js.php'); ?>
     <style>
-        .invalid{
-            color: red;
-            font-size: small;
-            margin-bottom: 0px;
-        }
+    .invalid {
+        color: red;
+        font-size: small;
+        margin-bottom: 0px;
+    }
     </style>
 </head>
- 
-<body> 
+
+<body>
     <?php include('header.php'); ?>
     <section class="vh-100" style="background-color: #eee;">
         <div class="container h-100">
@@ -30,76 +30,83 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
                                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
-                                
-<form class="mx-1 mx-md-4" action="<?= base_url('/saveuser')?>" method="post" enctype="multipart/form-data">
-<?php if(!empty($this->session->flashdata('success'))){?>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>Status</strong> <?=$this->session->flashdata('success');?>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<?php } ?>
-<?php if(!empty($this->session->flashdata('failed'))){?>
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-  <strong>Status</strong> <?=$this->session->flashdata('failed');?>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<?php } ?>
-<div class="d-flex flex-row align-items-center mb-1">
-   
-    <div class="form-outline flex-fill mb-0">
-        <label class="form-label" for="name">Your Name</label>
-        <input type="text" id="name" name="name" class="form-control" value="<?= set_value('name'); ?>"/>
-        <?= form_error('name')?> 
-    </div>
-</div>
 
-<div class="d-flex flex-row align-items-center mb-1">
-  
-    <div class="form-outline flex-fill mb-0">
-    <label class="form-label" for="email">Your Email</label>
-        <input type="text" id="email" name="email" class="form-control" value="<?= set_value('email'); ?>"/>
-        <?= form_error('email')?>
-    </div>
-</div>
+                                    <form class="mx-1 mx-md-4" action="<?= base_url('/saveuser')?>" method="post"
+                                        enctype="multipart/form-data">
+                                        <?php if(!empty($this->session->flashdata('success'))){?>
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <strong>Status</strong> <?=$this->session->flashdata('success');?>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <?php } ?>
+                                        <?php if(!empty($this->session->flashdata('failed'))){?>
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <strong>Status</strong> <?=$this->session->flashdata('failed');?>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <?php } ?>
+                                        <div class="d-flex flex-row align-items-center mb-1">
 
-<div class="d-flex flex-row align-items-center mb-1">
-  
-    <div class="form-outline flex-fill mb-0">
-    <label class="form-label" for="phone">Your Phone</label>
-        <input type="number" id="phone" name="phone" class="form-control" value="<?= set_value('phone'); ?>"/>
-        <?= form_error('phone')?>
-    </div>
-</div>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label class="form-label" for="name">Your Name</label>
+                                                <input type="text" id="name" name="name" class="form-control"
+                                                    value="<?= set_value('name'); ?>" />
+                                                <?= form_error('name')?>
+                                            </div>
+                                        </div>
 
-<div class="d-flex flex-row align-items-center mb-1">
-   
-    <div class="form-outline flex-fill mb-0">
-    <label class="form-label" for="password">Password</label>
-        <input type="password" id="password" name="password" class="form-control" value="<?= set_value('password'); ?>"/>
-        <?= form_error('password')?>
-    </div>
-</div>
+                                        <div class="d-flex flex-row align-items-center mb-1">
 
-<div class="d-flex flex-row align-items-center mb-1">
-    
-    <div class="form-outline flex-fill mb-0">
-    <label class="form-label" for="picture">Your Profile Picture</label>
-    <input type="file" id="picture" name="picture" accept="image/*" class="form-control" />
-    <?= form_error('picture')?>
-    </div>
-</div>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label class="form-label" for="email">Your Email</label>
+                                                <input type="text" id="email" name="email" class="form-control"
+                                                    value="<?= set_value('email'); ?>" />
+                                                <?= form_error('email')?>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-1">
+
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label class="form-label" for="phone">Your Phone</label>
+                                                <input type="number" id="phone" name="phone" class="form-control"
+                                                    value="<?= set_value('phone'); ?>"
+                                                    onkeypress="return isNumberKey(event)" />
+                                                <?= form_error('phone')?>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-1">
+
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label class="form-label" for="password">Password</label>
+                                                <input type="password" id="password" name="password"
+                                                    class="form-control" value="<?= set_value('password'); ?>" />
+                                                <?= form_error('password')?>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-1">
+
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label class="form-label" for="picture">Your Profile Picture</label>
+                                                <input type="file" id="picture" name="picture" accept="image/*"
+                                                    class="form-control" />
+                                                <?= form_error('picture')?>
+                                            </div>
+                                        </div>
 
 
 
-<div class="d-flex justify-content-center mx-4 mb-1 mb-lg-4">
-    <button type="submit" class="btn btn-primary">Sing Up</button>
-</div>
+                                        <div class="d-flex justify-content-center mx-4 mb-1 mb-lg-4">
+                                            <button type="submit" class="btn btn-primary">Sing Up</button>
+                                        </div>
 
-</form>
+                                    </form>
 
                                 </div>
                                 <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
@@ -115,5 +122,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </section>
 </body>
+
+<script>
+function isNumberKey(evt) {
+    if (evt.which == 101 || evt.which == 46 || evt.which == 69 || evt.which == 45 || evt.which == 43) {
+        evt.preventDefault();
+    }
+}
+</script>
+
 
 </html>

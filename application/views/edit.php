@@ -42,6 +42,10 @@
         <form class="mt-5 col-md-7" style="margin:auto;"
             action="<?= base_url('/admin')?>/<?=$users['data']->id?>/updateuser" method="post"
             enctype="multipart/form-data">
+            <?php if(file_exists( FCPATH.'uploads/'.$users['data']->picture)) { ?>
+            <img style="width:70px;" src="<?=base_url('/uploads')."/".$users['data']->picture?>"
+                title="<?= $users['data']->name; ?>" alt="<?= $users['data']->name; ?>">
+            <?php } ?>
             <div class="d-flex flex-row align-items-center mb-1">
 
                 <div class="form-outline flex-fill mb-0">

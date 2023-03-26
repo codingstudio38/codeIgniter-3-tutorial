@@ -26,14 +26,14 @@ class UserModel extends CI_Model {
     }
 	}
 
-  
+   
   public function UpdateUser($data,$id)
 	{  
     try {
-      if($this->db->insert('users_tbl', $data)){
-        return array("status"=>true,"lastid"=>$this->db->insert_id(),"message"=>"Successfully saved.");
+      if($this->db->update('users_tbl', $data, array('id' => $id))){
+        return array("status"=>true,"message"=>"Successfully updated.");
       } else {
-        return array("status"=>false,"message"=>"Failed to save data.");
+        return array("status"=>false,"message"=>"Failed to updated data.");
       } 
     } catch(Exception $e) {
       return array("status"=>false,"message"=>$e->getMessage());
