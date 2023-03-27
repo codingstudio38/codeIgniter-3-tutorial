@@ -1,12 +1,11 @@
  <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-require APPPATH . "libraries/vendor/autoload.php";
 date_default_timezone_set("Asia/Kolkata");
 class UserController extends CI_Controller {
 	public $google_client;
 	public $facebook;
 	public $facebook_helper;
-	public function __construct(){
+	public function __construct(){ 
 		parent::__construct();
 		$this->load->model('UserModel');
 		$this->load->library('form_validation');
@@ -29,6 +28,7 @@ class UserController extends CI_Controller {
     public function index()
 	{ 
 		UserNotLoggedIn();
+		// require APPPATH . "libraries/vendor/autoload.php";
 		//1- app\Libraries -> composer init
         //2- composer require google/apiclient:^2.12.1
         // facebook

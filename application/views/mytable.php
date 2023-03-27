@@ -31,10 +31,19 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th scope="col"> </th>
+                    <th scope="col"> </th>
+                    <th scope="col"> </th>
+                    <th colspan="2"> </th>
+                    <th><a href="<?=base_url('/admin/excelexport')?>" class="btn btn-info btn-sm">Export Excel</i></a>
+                        <a href="<?=base_url('/admin/excelexport')?>" class="btn btn-info btn-sm">Export PDF</a>
+                    </th>
+                </tr>
+                <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Address</th>
+                    <th scope="col">Phone</th>
                     <th scope="col">Picture</th>
                     <th scope="col">Action</th>
                 </tr>
@@ -46,7 +55,7 @@
                     <td><?=$row['name']?></td>
                     <td><?=$row['email']?></td>
                     <td><?=$row['phone']?></td>
-                    <td><img style="width:70px;" src="<?=base_url('/uploads')."/".$row['picture']?>"
+                    <td><img style=" width:70px;" src="<?=base_url('/uploads')."/".$row['picture']?>"
                             title="<?= $row['name']; ?>" alt="<?= $row['name']; ?>"></td>
                     <td scope="col">
                         <a href="<?=base_url('/admin')."/".$row['id']?>/edit" class="btn btn-info btn-sm"><i

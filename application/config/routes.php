@@ -59,8 +59,15 @@ $route['login-with-facebook'] = 'UserController/loginwithfacebook';
 $route['userlogin'] = 'UserController/userlogin'; 
 $route['register'] = 'UserController/register'; 
 $route['saveuser'] = 'UserController/saveuser'; 
+
 $route['admin'] = 'AdminController/index'; 
-$route['admin/(:any)/edit'] = 'AdminController/edit';  
-$route['admin/(:any)/updateuser'] = 'AdminController/updateuser';  
+
+$route['admin/excelexport'] = 'AdminController/excelexport'; 
+
+$route['admin/(:any)/edit'] = 'AdminController/edit'; 
+
+$route['admin/(:any)/updateuser'] = 'AdminController/updateuser';
+ 
 $route['admin/(:any)/delete'] = 'AdminController/delete'; 
+
 $route['admin/logout'] = 'AdminController/logout'; 

@@ -1,5 +1,7 @@
  <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 date_default_timezone_set("Asia/Kolkata");
 class AdminController extends CI_Controller {
  
@@ -16,6 +18,43 @@ class AdminController extends CI_Controller {
 		$result = $this->UserModel->getAllData();
 		$data = array("users"=>$result);
 		$this->load->view('mytable',$data);
+	}
+
+	public function excelexport()
+	{ 
+		UserLoggedIn(); 
+		$result = $this->UserModel->getAllData();
+		$fileName = date("YmdHis")."-".rand(10,100).'.xlsx';  
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+       	$sheet->setCellValue('A1', 'Id');
+        $sheet->setCellValue('B1', 'Name');
+        $sheet->setCellValue('C1', 'Email');
+        $sheet->setCellValue('D1', 'Phone');
+		$sheet->setCellValue('E1', 'Picture');
+        $sheet->setCellValue('F1', 'Created Date');       
+        $rows = 2;
+        foreach ($result as $val){
+            $sheet->setCellValue('A' . $rows, $val['id']);
+            $sheet->setCellValue('B' . $rows, $val['name']);
+            $sheet->setCellValue('C' . $rows, $val['email']);
+            $sheet->setCellValue('D' . $rows, $val['phone']);
+			$sheet->setCellValue('E' . $rows, $val['picture']);
+            $sheet->setCellValue('F' . $rows, $val['created_at']);
+            $rows++;
+        } 
+        $writer = new Xlsx($spreadsheet);
+		$writer->save("xl-export/".$fileName);
+		// header("Content-Type: application/vnd.ms-excel");
+        // redirect(base_url()."xl-export/".$fileName); 
+		header("Content-Type: application/vnd-ms-excel");
+        header("Content-Disposition: attachment; filename=".basename($file_name));
+        header('Expires: 0');
+        header('Content-Control: must-revalidae');
+        header('Pragma: public');
+        header('Content-Length:'.filesize($file_name));
+        flush();
+        readfile($file_name);  
 	}
 
  
