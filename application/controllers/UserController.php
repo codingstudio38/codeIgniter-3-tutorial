@@ -154,7 +154,16 @@ class UserController extends CI_Controller {
 		$this->form_validation->set_message('max_length', '{field} maximum 12 digit');
 		
 			if ($this->form_validation->run() == FALSE) {
-
+				// echo validation_errors(); 
+				// echo form_error('name');
+				// $errors = array(
+				// 	"name"=>form_error('name'),
+				// 	"email"=>form_error('email'),
+				// 	"phone"=>form_error('phone'),
+				// 	"password"=>form_error('password'),
+				// 	"picture"=>form_error('picture'),
+				// );
+				// print_r($errors);
 				$this->load->view('register');
 
 			} else {
@@ -215,7 +224,7 @@ class UserController extends CI_Controller {
 					$fbloginbutton = $this->facebook_helper->getLoginUrl(base_url('/') . 'login-with-facebook', array("email"));
 					$data = array("loginbutton"=>$loginbutton,"fbloginbutton"=>$fbloginbutton);
 					$this->load->view('login',$data);
-	
+	 
 				} else {
 
 					$email = $this->input->post('email');
