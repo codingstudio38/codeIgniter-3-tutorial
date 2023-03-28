@@ -83,8 +83,9 @@ class AdminController extends CI_Controller {
 					}
 				}
             }
-$excel_result = array("success"=>$success,"failed"=>$failed,"duplicate"=>$duplicate);			
-echo "<pre>";print_r($excel_result);echo "</pre>";
+			
+			$excel_result = array("success"=>$success,"failed"=>$failed,"duplicate"=>$duplicate);			
+			echo "<pre>";print_r($excel_result);echo "</pre>";
 
 			
 		} else {
