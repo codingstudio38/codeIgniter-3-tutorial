@@ -34,9 +34,23 @@
                     <th scope="col"> </th>
                     <th scope="col"> </th>
                     <th scope="col"> </th>
-                    <th colspan="2"> </th>
+                    <th colspan="2">
+                        <form action="<?= base_url('/admin/excelimport')?>" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="file" name="excelfile"
+                                        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                        class="form-control" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" name="ImportExcel" class="btn btn-primary btn-sm">Excel Import
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </th>
                     <th><a href="<?=base_url('/admin/excelexport')?>" class="btn btn-info btn-sm">Export Excel</i></a>
-                        <a href="<?=base_url('/admin/excelexport')?>" class="btn btn-info btn-sm">Export PDF</a>
+                        <a href="<?=base_url('/admin/pdfexport')?>" class="btn btn-info btn-sm">Export PDF</a>
                     </th>
                 </tr>
                 <tr>

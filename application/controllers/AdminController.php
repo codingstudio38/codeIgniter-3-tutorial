@@ -20,6 +20,80 @@ class AdminController extends CI_Controller {
 		$this->load->view('mytable',$data);
 	}
 
+	
+	public function excelimport()
+	{
+		if($this->input->post()){
+			UserLoggedIn(); 
+		$file_name = $_FILES[ "excelfile" ][ "name" ];
+		$file_type = $_FILES[ "excelfile" ][ "type" ];
+		$file_tmpname = $_FILES[ 'excelfile' ][ 'tmp_name' ];
+		$file_size = round($_FILES[ "excelfile" ][ "size" ] / ( 1024 * 1024 ), 2 );
+		$file_extension = pathinfo( $file_name, PATHINFO_EXTENSION );
+		$allowed_extension = array( "xls", "xlsx", "csv");
+		if(empty($_FILES['excelfile']['name'])){
+			$this->session->set_flashdata('failed','Please select profile picture');
+			redirect(base_url('/admin'));
+		} else if(!in_array($file_extension, $allowed_extension )){
+			$this->session->set_flashdata('failed','Please select xls, xlsx, csv file');
+			redirect(base_url('/admin'));
+		}else if ( $file_size >= 2 ) {
+			$this->session->set_flashdata('failed','Please select size less than 2 MB');
+			redirect(base_url('/admin'));
+		}	
+		
+		$array = array();
+		$success = array();
+		$failed = array();
+		$duplicate = array();
+		if($file_extension== 'xls'){
+            $render = new \PhpOffice\PhpSpreadsheet\Reader\Xls;
+        } else if($file_extension== 'xlsx') {
+            $render = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+        } else {
+            $render = new \PhpOffice\PhpSpreadsheet\Reader\Csv;
+        }
+        $spreadsheet = $render->load($file_tmpname);
+        $data = $spreadsheet->getActiveSheet()->toArray();
+		foreach($data as $key => $row){
+                if($key == 0){
+                    continue;
+                }
+                $name = $row[0];
+                $email = $row[1];
+                $phone = $row[2];
+				$password = $row[3];
+                   $dataImp = [
+                    'name' => $name,
+                    'email' => $email,
+                    'phone' => $phone,
+					'password' => password_hash($password, PASSWORD_DEFAULT),
+                ];
+				array_push($array, $dataImp);
+				$result_email = $this->UserModel->findByEmail($email);
+				if ($result_email['status'])
+				{
+					array_push($duplicate, $email);
+				} else {
+					$result = $this->UserModel->save($dataImp);
+					if($result['status']){
+						array_push($success, $email);
+					} else {
+						array_push($failed, $email);
+					}
+				}
+            }
+$excel_result = array("success"=>$success,"failed"=>$failed,"duplicate"=>$duplicate);			
+echo "<pre>";print_r($excel_result);echo "</pre>";
+
+			
+		} else {
+			redirect(base_url('/admin'));
+		}
+		
+	}
+
+
 	public function excelexport()
 	{ 
 		UserLoggedIn(); 
@@ -45,19 +119,32 @@ class AdminController extends CI_Controller {
         } 
         $writer = new Xlsx($spreadsheet);
 		$writer->save("xl-export/".$fileName);
-		// header("Content-Type: application/vnd.ms-excel");
-        // redirect(base_url()."xl-export/".$fileName); 
-		header("Content-Type: application/vnd-ms-excel");
-        header("Content-Disposition: attachment; filename=".basename($file_name));
-        header('Expires: 0');
-        header('Content-Control: must-revalidae');
-        header('Pragma: public');
-        header('Content-Length:'.filesize($file_name));
-        flush();
-        readfile($file_name);  
+		header("Content-Type: application/vnd.ms-excel");
+        redirect(base_url()."xl-export/".$fileName); 
+		
 	}
 
- 
+	 
+	public function  pdfexport()
+	{ 
+	
+		require  APPPATH . "libraries/vendor/dompdf/dompdf/autoload.inc.php";
+		// composer require dompdf/dompdf
+		UserLoggedIn(); 
+		$result = $this->UserModel->getAllData();
+		$data = array("users"=>$result);
+		$html = $this->load->view('mypdf',$data);
+		$dompdf = new Dompdf\DOMPDF();
+        $dompdf->load_html($html);
+        $dompdf->set_paper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream('sdfsfdsf.pdf', array('Attachment' => 1));
+		// $dompdf = new \Dompdf\Dompdf(); 
+        // $dompdf->loadHtml($this->load->view('mypdf',$data));
+        // $dompdf->setPaper('A4', 'landscape');
+        // $dompdf->render();
+        // $dompdf->stream();
+	}
 	
 	public function logout()
 	{ 
