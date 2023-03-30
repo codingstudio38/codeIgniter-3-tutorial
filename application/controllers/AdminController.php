@@ -153,7 +153,6 @@ class AdminController extends CI_Controller {
 		error_reporting(0);
 		$result = $this->UserModel->getAllData();
 		$data = array("users"=>$result);
-
 		$html = $this->load->view('mypdf',$data,true);
 		mb_internal_encoding('UTF-8');
 		$this->load->library('pdf');
