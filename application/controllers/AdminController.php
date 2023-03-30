@@ -162,7 +162,7 @@ class AdminController extends CI_Controller {
 		$output = $this->dompdf->output();
 		$file_name = rand(10,10000).'.pdf';
 		file_put_contents(FCPATH.'pdf-export/'.$file_name, $output);
-		redirect(base_url('pdf-export/'.$file_name));
+		redirect(base_url('pdf-export/'.$file_name)); 
 	    // header("Content-Type: application/pdf");
         // header("Content-Disposition: attachment; filename=".basename($file_name));
         // header('Expires: 0');

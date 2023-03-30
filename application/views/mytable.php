@@ -49,8 +49,10 @@
                             </div>
                         </form>
                     </th>
-                    <th><a href="<?=base_url('/admin/excelexport')?>" class="btn btn-info btn-sm">Export Excel</i></a>
-                        <a href="<?=base_url('/admin/pdfexport')?>" class="btn btn-info btn-sm">Export PDF</a>
+                    <th><a href="<?=base_url('/admin/excelexport')?>" target="_blank" class="btn btn-info btn-sm">Export
+                            Excel</i></a>
+                        <a href="<?=base_url('/admin/pdfexport')?>" target="_blank" class="btn btn-info btn-sm">Export
+                            PDF</a>
                     </th>
                 </tr>
                 <tr>
