@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '61ebefeca47048abb52ae8ca4bd0956dd1e09884',
+        'reference' => '6e40474e243ee25fb2e6d340a6f383a80a08dd61',
         'name' => 'google/login',
         'dev' => true,
     ),
@@ -79,7 +79,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '61ebefeca47048abb52ae8ca4bd0956dd1e09884',
+            'reference' => '6e40474e243ee25fb2e6d340a6f383a80a08dd61',
             'dev_requirement' => false,
         ),
         'guzzlehttp/guzzle' => array(

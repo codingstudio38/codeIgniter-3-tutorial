@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Dompdf\Dompdf;
 date_default_timezone_set("Asia/Kolkata");
 class AdminController extends CI_Controller {
  
@@ -124,29 +125,56 @@ class AdminController extends CI_Controller {
         redirect(base_url()."xl-export/".$fileName); 
 		
 	}
-
-	 
+ 
+	  
 	public function  pdfexport()
-	{ 
-	
-		require  APPPATH . "libraries/vendor/dompdf/dompdf/autoload.inc.php";
-		// composer require dompdf/dompdf
-		UserLoggedIn(); 
-		$result = $this->UserModel->getAllData();
-		$data = array("users"=>$result);
-		$html = $this->load->view('mypdf',$data);
-		$dompdf = new Dompdf\DOMPDF();
-        $dompdf->load_html($html);
-        $dompdf->set_paper('A4', 'landscape');
-        $dompdf->render();
-        $dompdf->stream('sdfsfdsf.pdf', array('Attachment' => 1));
+	{  
+	    //echo dirname(__FILE__).'/dompdf/autoload.inc.php';
+		//require  APPPATH . "libraries/vendor/dompdf/autoload.inc.php";
+		// composer require dompdf/dompdf - not work
+		//composer require dompdf/dompdf:1.2.1 - not work
+		//https://github.com/dompdf/dompdf/releases/tag/v1.2.1 - not work
+		//https://github.com/dompdf/dompdf/releases/tag/v0.8.2
+		// $this->load->view('mypdf',$data);
+		// $pdf = new DOMPDF();
+		// $dompdf = new Dompdf\DOMPDF();
+        // $dompdf->load_html($html);
+        // $dompdf->set_paper('A4', 'landscape');
+        // $dompdf->render();
+        // $dompdf->stream('sdfsfdsf.pdf', array('Attachment' => 1));
 		// $dompdf = new \Dompdf\Dompdf(); 
         // $dompdf->loadHtml($this->load->view('mypdf',$data));
         // $dompdf->setPaper('A4', 'landscape');
         // $dompdf->render();
         // $dompdf->stream();
+		// $this->load->view('mypdf',$data);
+
+		UserLoggedIn();  
+		error_reporting(0);
+		$result = $this->UserModel->getAllData();
+		$data = array("users"=>$result);
+
+		$html = $this->load->view('mypdf',$data,true);
+		mb_internal_encoding('UTF-8');
+		$this->load->library('pdf');
+		$this->dompdf->loadHtml($html);
+		$this->dompdf->render();
+		$this->dompdf->setPaper('A4', 'landscape');
+		$output = $this->dompdf->output();
+		$file_name = rand(10,10000).'.pdf';
+		file_put_contents(FCPATH.'pdf-export/'.$file_name, $output);
+		redirect(base_url('pdf-export/'.$file_name));
+	    // header("Content-Type: application/pdf");
+        // header("Content-Disposition: attachment; filename=".basename($file_name));
+        // header('Expires: 0');
+        // header('Content-Control: must-revalidae');
+        // header('Pragma: public');
+        // header('Content-Length:'.filesize($file_name));
+        // flush();
+        // readfile($file_name);
+        // exit;
 	}
-	
+	 
 	public function logout()
 	{ 
 		UserLoggedIn();
