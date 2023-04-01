@@ -59,7 +59,7 @@ $route['login-with-facebook'] = 'UserController/loginwithfacebook';
 $route['userlogin'] = 'UserController/userlogin'; 
 $route['register'] = 'UserController/register'; 
 $route['saveuser'] = 'UserController/saveuser'; 
-    
+     
 $route['admin'] = 'AdminController/index'; 
  
 $route['admin/excelexport'] = 'AdminController/excelexport'; 
