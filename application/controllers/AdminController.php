@@ -143,7 +143,7 @@ class AdminController extends CI_Controller {
 		$canvas->page_text(10, 20, "Page - {PAGE_NUM} of  {PAGE_COUNT}", null, 11, array(0,0,0));
 		$file_name = rand(10,10000).'.pdf';
         $dompdf->stream($file_name);
-
+ 
 		// error_reporting(0); -----------> useing manually download dom pdf pakege  
 		// mb_internal_encoding('UTF-8');
 		// $this->load->library('pdf');
@@ -158,14 +158,15 @@ class AdminController extends CI_Controller {
 		// redirect(base_url('pdf-export/'.$file_name)); 
 	} 
 	 
-	public function logout()
-	{ 
-		UserLoggedIn();
-		$this->session->set_userdata('user',"");
-		unset($_SESSION['user']);
-		$this->session->set_flashdata('success',"Successfully logged out");
-		redirect(base_url('/login'));
+	
+	public function  multipledatabase()
+	{
+		UserLoggedIn(); 
+		$result = $this->UserModel->getAllUserFromSecondDb();
+		$data = array("users"=>$result);
+		$this->load->view('multiple-db-view',$data);
 	}
+
  
   
 	public function edit()
@@ -335,7 +336,33 @@ class AdminController extends CI_Controller {
 		
 	}
 
+
+	public function logout()
+	{ 
+		UserLoggedIn();
+		$this->session->set_userdata('user',"");
+		unset($_SESSION['user']);
+		$this->session->set_flashdata('success',"Successfully logged out");
+		redirect(base_url('/login'));
+	}
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 }
 

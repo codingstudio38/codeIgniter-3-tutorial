@@ -3,7 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class UserModel extends CI_Model {
 
-
+  public $seconddb;
+  public function __construct(){
+     $this->seconddb=$this->load->database('seconddb', TRUE); 
+	}
+  
   public function getAllData()
 	{ 
     $query = $this->db->select('*')->get('users_tbl');
@@ -11,7 +15,14 @@ class UserModel extends CI_Model {
     return $result; 
 	}
 
- 
+  
+  public function getAllUserFromSecondDb()
+	{ 
+    $query = $this->seconddb->select('*')->get('users');
+    $result = $query->result_array();
+    return $result; 
+	}
+
   
   public function save($data)
 	{ 

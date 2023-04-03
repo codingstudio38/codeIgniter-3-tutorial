@@ -23,6 +23,10 @@
                     href="<?=base_url('/admin')?>">Home</a>
             </li>
             <li class="nav-item ">
+                <a class="nav-link <?php if(isset($_SERVER['REDIRECT_QUERY_STRING'])){ if($_SERVER['REDIRECT_QUERY_STRING']=="/admin/multiple-database"){echo "active";}} ?>"
+                    href="<?=base_url('/admin/multiple-database')?>">Multiple DB</a>
+            </li>
+            <li class="nav-item ">
                 <a class="nav-link" href="<?=base_url('/admin/logout')?>">Logout</a>
             </li>
             <?php } ?>
