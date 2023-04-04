@@ -168,7 +168,38 @@ class AdminController extends CI_Controller {
 		$this->load->view('multiple-db-view',$data);
 	}
 
- 
+
+	public function  sendmail()
+	{
+		UserLoggedIn(); 
+		$this->load->library('email');
+		$config = array();
+		//$config['protocol'] = 'smtp';
+		$config['protocol'] = 'sendmail';
+		$config['mailpath'] = '/usr/sbin/sendmail';
+		$config['charset'] = 'iso-8859-1';
+		$config['wordwrap'] = TRUE;
+		$config['smtp_host'] = 'smtp.googlemail.com';
+		$config['smtp_user'] = 'onlinemessages0001@gmail.com';
+		$config['smtp_pass'] = 'wiuocjngxjitzntr';
+		$config['smtp_port'] = 25;//587//25
+		$this->email->initialize($config);
+		$this->email->from("onlinemessages0001@gmail.com", 'Identification');
+        $this->email->to("mondalbidyut38@gmail.com");
+		$this->email->cc('another@another-example.com');
+		$this->email->bcc('them@their-example.com');
+        $this->email->subject('Send Email Codeigniter');
+        $this->email->message('The email send using codeigniter library');
+        if($this->email->send()){
+			echo 1;
+		} else{
+			echo 0;
+		}
+	}
+
+	
+
+
   
 	public function edit()
 	{ 

@@ -34,7 +34,9 @@
                 <tr>
                     <th scope="col"> </th>
                     <th scope="col"> </th>
-                    <th scope="col"> </th>
+                    <th scope="col"><a href="<?=base_url('/admin/sendmail')?>" target="_blank"
+                            class="btn btn-info btn-sm"><i class="fa fa-envelope" aria-hidden="true"></i> Send </a>
+                    </th>
                     <th colspan="2">
                         <form action="<?= base_url('/admin/excelimport')?>" method="post" enctype="multipart/form-data">
                             <div class="row">
@@ -51,7 +53,7 @@
                         </form>
                     </th>
                     <th><a href="<?=base_url('/admin/excelexport')?>" target="_blank" class="btn btn-info btn-sm">Export
-                            Excel</i></a>
+                            Excel </a>
                         <a href="<?=base_url('/admin/pdfexport')?>" target="_blank" class="btn btn-info btn-sm">Export
                             PDF</a>
                     </th>
