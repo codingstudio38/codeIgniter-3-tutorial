@@ -28,6 +28,7 @@
             </button>
         </div>
         <?php } ?>
+
         <table class="table table-striped">
             <thead>
                 <tr>

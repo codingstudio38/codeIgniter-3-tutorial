@@ -28,6 +28,7 @@
                 <td><?=$row['name']?></td>
                 <td><?=$row['email']?></td>
                 <td><?=$row['phone']?></td>
+
                 <td><img style=" width:70px;" src="<?=base_url('/uploads')."/".$row['picture']?>"
                         title="<?= $row['name']; ?>" alt="<?= $row['name']; ?>"></td>
 

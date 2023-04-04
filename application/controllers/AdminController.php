@@ -136,8 +136,9 @@ class AdminController extends CI_Controller {
 		
 		// composer require dompdf/dompdf -----------> useing command line dom pdf pakege 
 		$dompdf = new \Dompdf\Dompdf(); 
+		$dompdf->set_option('isRemoteEnabled' ,true);
         $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->setPaper('A4', 'portrait');//setPaper('A4', 'landscape');
         $dompdf->render();
 		$canvas = $dompdf->get_canvas();
 		$canvas->page_text(10, 20, "Page - {PAGE_NUM} of  {PAGE_COUNT}", null, 11, array(0,0,0));
@@ -145,8 +146,8 @@ class AdminController extends CI_Controller {
         $dompdf->stream($file_name);
  
 		// error_reporting(0); -----------> useing manually download dom pdf pakege  
-		// mb_internal_encoding('UTF-8');
 		// $this->load->library('pdf');
+		// mb_internal_encoding('UTF-8');
 		// $this->dompdf->loadHtml($html);
 		// $this->dompdf->render();
 		// $this->dompdf->setPaper('A4', 'landscape');
