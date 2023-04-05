@@ -235,6 +235,13 @@ class UserController extends CI_Controller {
 
 						if(password_verify($password,$result['data']->password)){
 
+							$datalog = [
+								'login_id' => $result['data']->id,
+								'logintime' => date('Y-m-d H:s:i'),
+								'logouttime' => null,
+								'system' => $_SERVER['HTTP_USER_AGENT']
+							];
+							$this->UserModel->savelogindetails($datalog);
 							$this->session->set_userdata('user',$result['data']);
 							$this->session->set_flashdata('success',"Successfully logged in.");
 							redirect(base_url('/admin'));

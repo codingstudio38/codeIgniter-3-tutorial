@@ -176,10 +176,55 @@ class UserModel extends CI_Model {
   
   
   
+public function UserLoginDetails($id)
+{
+  try {
+    if(empty($id)){ return array("status"=>false,"message"=>"Id not found."); }
+    $this->db->select('*');
+    $this->db->from('users_tbl user'); 
+    $this->db->join('user_login_details dtl', 'dtl.login_id=user.id', 'inner');
+    $this->db->where('user.id',$id);
+    $this->db->order_by('user.created_at','asc');         
+    $query = $this->db->get(); 
+    if($query->num_rows() > 0)
+    {
+      return array("status"=>true,"message"=>"Record found.","data"=>$query->result_array());
+    } else {
+      return array("status"=>false,"message"=>"Record not found.");
+    }
+  } catch(Exception $e) {
+    return array("status"=>false,"message"=>$e->getMessage());
+  }
+	
+}  
   
   
-  
-  
+public function savelogindetails($data)
+{ 
+  try {
+    if($this->db->insert('user_login_details', $data)){
+      return array("status"=>true,"lastid"=>$this->db->insert_id(),"message"=>"Successfully saved.");
+    } else {
+      return array("status"=>false,"message"=>"Failed to save data.");
+    } 
+  } catch(Exception $e) {
+    return array("status"=>false,"message"=>$e->getMessage());
+  }
+} 
+
+public function savelogoutdetails($data)
+{ 
+  try {
+    if($this->db->update('user_login_details', $data, array('id' => $id))){
+      return array("status"=>true,"lastid"=>$this->db->insert_id(),"message"=>"Successfully update.");
+    } else {
+      return array("status"=>false,"message"=>"Failed to update.");
+    } 
+  } catch(Exception $e) {
+    return array("status"=>false,"message"=>$e->getMessage());
+  }
+} 
+
   
   
 }

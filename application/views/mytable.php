@@ -81,6 +81,8 @@
                                 class="fa fa-pencil" aria-hidden="true"></i></a>
                         <a href="<?=base_url('/admin')."/".$row['id']?>/delete" class="btn btn-danger btn-sm"><i
                                 class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a href="<?=base_url('/admin/joinfunction')."?id=".$row['id']?>"
+                            class="btn btn-info btn-sm">Login Details</a>
                     </td>
                 </tr>
                 <?php }?>

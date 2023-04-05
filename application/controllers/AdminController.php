@@ -168,7 +168,7 @@ class AdminController extends CI_Controller {
 		$this->load->view('multiple-db-view',$data);
 	}
 
-
+ 
 	public function  sendmail()
 	{
 		UserLoggedIn(); 
@@ -198,7 +198,22 @@ class AdminController extends CI_Controller {
 	}
 
 	
-
+public function joinfunction()
+{
+	$id = isset($_GET['id'])?$_GET['id']:"";
+    $result = $this->UserModel->UserLoginDetails($id);
+    if($result['status'])
+    {
+		// echo "<pre>";
+		// print_r($result['data']);
+		// echo "</pre>"; exit;
+		$this->load->view('login_dtl',$result);
+    } else {
+		$this->session->set_flashdata('failed',"No records founds");
+        redirect(base_url('/admin'));
+    }
+	
+}
 
   
 	public function edit()
