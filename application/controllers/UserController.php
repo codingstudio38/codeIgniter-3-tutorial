@@ -240,12 +240,17 @@ class UserController extends CI_Controller {
 								'logintime' => date('Y-m-d H:s:i'),
 								'logouttime' => null,
 								'system' => $_SERVER['HTTP_USER_AGENT']
-							];
-							$this->UserModel->savelogindetails($datalog);
-							$this->session->set_userdata('user',$result['data']);
-							$this->session->set_flashdata('success',"Successfully logged in.");
-							redirect(base_url('/admin'));
-
+							]; 
+							$savedtl = $this->UserModel->savelogindetails($datalog);
+							if($savedtl['status']){
+								$session_data = array("details"=>$result['data'],"login_id"=>$savedtl['lastid']);
+								$this->session->set_userdata('user',$session_data);
+								$this->session->set_flashdata('success',"Successfully logged in.");
+								redirect(base_url('/admin'));
+							} else {
+								$this->session->set_flashdata('failed',$result['message']);
+								redirect(base_url('/login'));
+							}
 						} else {
 							$this->session->set_flashdata('failed',"Login failed.");
 							redirect(base_url('/login'));

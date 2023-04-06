@@ -21,6 +21,43 @@ class AdminController extends CI_Controller {
 		$this->load->view('mytable',$data);
 	}
 
+
+
+
+
+	 
+public function joinfunction()
+{
+	$id = isset($_GET['id'])?$_GET['id']:"";
+
+	//for pagination start
+	$page = isset($_GET['page'])?$_GET['page']:1;
+	
+	$limit = 5;
+	$query = "SELECT * FROM `users_tbl` `user` JOIN `user_login_details` `dtl` ON `user`.`id`= `dtl`.`login_id` WHERE `dtl`.`login_id`='$id'";
+	$total = $this->UserModel->CheckTotalRecords($query);
+	$start = ($page - 1)*$limit;
+	
+	$url = base_url()."admin/joinfunction";	
+	$params = "id=$id";	 
+	//for pagination end
+	
+    $result = $this->UserModel->UserLoginDetails($id, $limit, $start);
+    if($result['status'])
+    {
+		$links = $this->UserModel->paginatelink($limit,$total,$page,$url,$params);
+		$data = array('links'=>$links,'data'=>$result);
+		$this->load->view('login_dtl',$data);
+    } else {
+		$this->session->set_flashdata('failed',"No records founds");
+        redirect(base_url('/admin'));
+    }
+	
+}
+
+
+
+
 	
 	public function excelimport()
 	{
@@ -128,7 +165,7 @@ class AdminController extends CI_Controller {
  
 	  
 	public function  pdfexport()
-	{  
+	{   
 		UserLoggedIn(); 
 		$result = $this->UserModel->getAllData();
 		$data = array("users"=>$result);
@@ -197,23 +234,6 @@ class AdminController extends CI_Controller {
 		}
 	}
 
-	
-public function joinfunction()
-{
-	$id = isset($_GET['id'])?$_GET['id']:"";
-    $result = $this->UserModel->UserLoginDetails($id);
-    if($result['status'])
-    {
-		// echo "<pre>";
-		// print_r($result['data']);
-		// echo "</pre>"; exit;
-		$this->load->view('login_dtl',$result);
-    } else {
-		$this->session->set_flashdata('failed',"No records founds");
-        redirect(base_url('/admin'));
-    }
-	
-}
 
   
 	public function edit()
@@ -339,7 +359,7 @@ public function joinfunction()
 							}
 						}
 					}
-					if($loggedinuser->id==$id){
+					if($loggedinuser['details']->id==$id){
 						$this->logout();
 					}
 					$this->session->set_flashdata('success',$update['message']." ".$file);
@@ -366,7 +386,7 @@ public function joinfunction()
 		$id=$this->uri->segment(2); 
 		$result = $this->UserModel->DeleteById($id);
 		if($result['status']){ 
-			if($loggedinuser->id==$id){
+			if($loggedinuser['details']->id==$id){
 				$this->logout();
 				// $this->session->set_userdata('user',"");
 				// unset($_SESSION['user']);
@@ -387,10 +407,20 @@ public function joinfunction()
 	public function logout()
 	{ 
 		UserLoggedIn();
-		$this->session->set_userdata('user',"");
-		unset($_SESSION['user']);
-		$this->session->set_flashdata('success',"Successfully logged out");
-		redirect(base_url('/login'));
+		$loggedinuser = $this->session->userdata('user');
+		$datalog = [
+			'logouttime' => date('Y-m-d H:s:i'),
+		];
+		$savedtl = $this->UserModel->savelogoutdetails($datalog,$loggedinuser['login_id']);
+		if($savedtl['status']){
+			$this->session->set_userdata('user',"");
+			unset($_SESSION['user']);
+			$this->session->set_flashdata('success',"Successfully logged out");
+			redirect(base_url('/login'));
+		} else {
+			$this->session->set_flashdata('failed',$savedtl['message']);
+			redirect(base_url('/admin'));
+		} 
 	}
 	
 

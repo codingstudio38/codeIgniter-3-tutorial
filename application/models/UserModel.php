@@ -175,20 +175,36 @@ class UserModel extends CI_Model {
 	}
   
   
-  
-public function UserLoginDetails($id)
+public function CheckTotalRecords(string $query)
 {
-  try {
+  try { 
+    if(empty($query)){
+      return 0;
+    }
+    $queryis = $this->db->query($query);
+    //$result = $query->row();
+    return $queryis->num_rows(); 
+   } catch(Exception $e) {
+    return 0;
+  }
+} 
+
+
+
+public function UserLoginDetails($id, $limit, $start)
+{
+  try { 
     if(empty($id)){ return array("status"=>false,"message"=>"Id not found."); }
     $this->db->select('*');
     $this->db->from('users_tbl user'); 
     $this->db->join('user_login_details dtl', 'dtl.login_id=user.id', 'inner');
     $this->db->where('user.id',$id);
-    $this->db->order_by('user.created_at','asc');         
+    $this->db->order_by('dtl.created_at','DESC');
+    $this->db->limit($limit, $start);         
     $query = $this->db->get(); 
     if($query->num_rows() > 0)
     {
-      return array("status"=>true,"message"=>"Record found.","data"=>$query->result_array());
+      return array("status"=>true,"message"=>"Record found.","total"=>$query->num_rows(),"data"=>$query->result_array());
     } else {
       return array("status"=>false,"message"=>"Record not found.");
     }
@@ -200,10 +216,10 @@ public function UserLoginDetails($id)
   
   
 public function savelogindetails($data)
-{ 
+{  
   try {
     if($this->db->insert('user_login_details', $data)){
-      return array("status"=>true,"lastid"=>$this->db->insert_id(),"message"=>"Successfully saved.");
+      return array("status"=>true,"lastid"=>$this->db->insert_id(),"message"=>"Login information successfully saved.");
     } else {
       return array("status"=>false,"message"=>"Failed to save data.");
     } 
@@ -212,7 +228,7 @@ public function savelogindetails($data)
   }
 } 
 
-public function savelogoutdetails($data)
+public function savelogoutdetails($data,$id)
 { 
   try {
     if($this->db->update('user_login_details', $data, array('id' => $id))){
@@ -226,6 +242,103 @@ public function savelogoutdetails($data)
 } 
 
   
-  
+
+
+
+public function paginatelink(int $limit,int $total_records,int $page,string $url,string $params){
+  if(empty($params)){
+    $params_ = "";
+  } else {
+    $params_ = "&".$params;
+  }
+	$previous = $page-1;
+	$next =$page+1;
+	$currentPage = $page;		
+	$total_page = ceil($total_records/$limit);		
+	$lastPage = $total_page;
+	$fiestPage = 1;
+	if($next <= $total_page){
+		$next_ = $next;
+	} else {
+		$next_ = 0;
+	}
+
+	if($total_records > $limit){
+
+	
+		$output_n = "<nav aria-label='Page navigation example'>";
+		$output_n .= "<ul class='pagination nav justify-content-center'>";
+		if($previous <= 0){
+			$output_n .="<li class='page-item disabled'><a class='page-link' href='javascript:void(0)'>Previous</a></li>";
+		} else {
+			$output_n .="<li class='page-item'><a href='$url?page=$previous$params_' class='page-link' rel='prev'>Previous</a></li>";
+		}
+		if ($currentPage > 3) {
+				$output_n .="<li class='page-item'><a class='page-link' href='$url?page=1$params_'>1</a></li>";
+			}
+			if ($currentPage > 4) {
+				$output_n .="<li class='page-item'><a class='page-link' href='javascript:void(0)'>...</a></li>";
+			}
+		foreach (range(1, $lastPage) as $i){
+			if ($i >= $currentPage - 2 && $i <= $currentPage + 2) {
+				if ($i == $currentPage) {
+				$output_n .="<li class='page-item active'><a class='page-link'>$i</a></li>";
+			} else {
+				$output_n .="<li class='page-item'><a class='page-link' href='$url?page=$i$params_'>$i</a></li>";
+			}
+			}
+		}
+		if ($currentPage < $lastPage - 3) {
+			$output_n .="<li class='page-item'><a class='page-link' href='javascript:void(0)'>...</a></li>";
+			}
+
+		if ($currentPage < $lastPage - 2) {
+		$output_n .="<li class='page-item'><a class='page-link' href='$url?page=$lastPage$params_'>$lastPage</a></li>";
+		}
+
+		if($next <= $total_page){
+			$output_n .="<li class='page-item'><a class='page-link' href='$url?page=$next$params_' rel='next'>Next</a></li>";
+		} else {
+			$output_n .="<li class='page-item disabled'><a class='page-link' href='javascript:void(0)'>Next</a></li>";
+		}
+		
+		$output_n .="</ul>";
+
+		$output_n .="</nav>";  
+
+
+
+	} else {
+	
+	$output_n ="";
+	
+	}
+ return array(
+    "html_view" => $output_n,
+    "active_page" => $page,
+    "total_records" => $total_records,
+    "total_page" => $total_page,
+    "previous" => $previous,
+    "next" => $next_,
+    "first_page"=>$fiestPage,
+    "last_page"=>$lastPage
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 ?>

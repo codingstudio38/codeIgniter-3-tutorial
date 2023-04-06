@@ -40,7 +40,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($data AS $key => $row){ ?>
+                <?php foreach($data['data'] AS $key => $row){ ?>
                 <tr>
                     <td><?=$row['id']?></td>
                     <td><?=$row['name']?></td>
@@ -50,6 +50,13 @@
                 </tr>
                 <?php }?>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" align="center">
+                        <?= $links['html_view']?>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </body>
