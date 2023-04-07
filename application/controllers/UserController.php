@@ -237,7 +237,7 @@ class UserController extends CI_Controller {
 
 							$datalog = [
 								'login_id' => $result['data']->id,
-								'logintime' => date('Y-m-d H:s:i'),
+								'logintime' => date('Y-m-d H:i:s'),
 								'logouttime' => null,
 								'system' => $_SERVER['HTTP_USER_AGENT']
 							]; 

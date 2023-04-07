@@ -182,7 +182,7 @@ public function joinfunction()
 		$file_name = rand(10,10000).'.pdf';
         $dompdf->stream($file_name);
  
-		// error_reporting(0); -----------> useing manually download dom pdf pakege  
+		// error_reporting(0); -----------> useing manually downloaded dom pdf pakege  
 		// $this->load->library('pdf');
 		// mb_internal_encoding('UTF-8');
 		// $this->dompdf->loadHtml($html);
@@ -211,12 +211,11 @@ public function joinfunction()
 		UserLoggedIn(); 
 		$this->load->library('email');
 		$config = array();
-		//$config['protocol'] = 'smtp';
-		$config['protocol'] = 'sendmail';
+		$config['protocol'] = 'smtp';//'smtp'//sendmail
 		$config['mailpath'] = '/usr/sbin/sendmail';
 		$config['charset'] = 'iso-8859-1';
 		$config['wordwrap'] = TRUE;
-		$config['smtp_host'] = 'smtp.googlemail.com';
+		$config['smtp_host'] = 'smtp.googlemail.com';//'ssl://smtp.googlemail.com'
 		$config['smtp_user'] = 'onlinemessages0001@gmail.com';
 		$config['smtp_pass'] = 'wiuocjngxjitzntr';
 		$config['smtp_port'] = 25;//587//25
@@ -228,7 +227,7 @@ public function joinfunction()
         $this->email->subject('Send Email Codeigniter');
         $this->email->message('The email send using codeigniter library');
         if($this->email->send()){
-			echo 1;
+			echo 1; 
 		} else{
 			echo 0;
 		}
@@ -409,7 +408,7 @@ public function joinfunction()
 		UserLoggedIn();
 		$loggedinuser = $this->session->userdata('user');
 		$datalog = [
-			'logouttime' => date('Y-m-d H:s:i'),
+			'logouttime' => date('Y-m-d H:i:s'),
 		];
 		$savedtl = $this->UserModel->savelogoutdetails($datalog,$loggedinuser['login_id']);
 		if($savedtl['status']){

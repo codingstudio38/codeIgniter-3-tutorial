@@ -67,7 +67,7 @@ $route['admin/multiple-database'] = 'AdminController/multipledatabase';
 $route['admin/sendmail'] = 'AdminController/sendmail'; 
 
 $route['admin/joinfunction'] = 'AdminController/joinfunction'; 
- 
+  
 $route['admin/excelexport'] = 'AdminController/excelexport'; 
 
 $route['admin/excelimport'] = 'AdminController/excelimport'; 
