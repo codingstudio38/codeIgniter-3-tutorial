@@ -60,7 +60,7 @@ $route['userlogin'] = 'UserController/userlogin';
 $route['register'] = 'UserController/register'; 
 $route['saveuser'] = 'UserController/saveuser'; 
      
-$route['admin'] = 'AdminController/index'; 
+$route['admin'] = 'AdminController/index';  
 
 $route['admin/multiple-database'] = 'AdminController/multipledatabase'; 
   
@@ -80,4 +80,4 @@ $route['admin/(:any)/updateuser'] = 'AdminController/updateuser';
  
 $route['admin/(:any)/delete'] = 'AdminController/delete'; 
 
-$route['admin/logout'] = 'AdminController/logout';  
+$route['admin/logout'] = 'AdminController/logout';    

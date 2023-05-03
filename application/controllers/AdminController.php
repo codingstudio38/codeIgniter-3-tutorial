@@ -70,7 +70,7 @@ public function joinfunction()
 		$file_extension = pathinfo( $file_name, PATHINFO_EXTENSION );
 		$allowed_extension = array( "xls", "xlsx", "csv");
 		if(empty($_FILES['excelfile']['name'])){
-			$this->session->set_flashdata('failed','Please select profile picture');
+			$this->session->set_flashdata('failed','Please select file');
 			redirect(base_url('/admin'));
 		} else if(!in_array($file_extension, $allowed_extension )){
 			$this->session->set_flashdata('failed','Please select xls, xlsx, csv file');
@@ -162,14 +162,14 @@ public function joinfunction()
         redirect(base_url()."xl-export/".$fileName); 
 		
 	}
- 
+  
 	  
 	public function  pdfexport()
 	{   
 		UserLoggedIn(); 
 		$result = $this->UserModel->getAllData();
 		$data = array("users"=>$result);
-		$html = $this->load->view('mypdf',$data,true);
+		$this->load->view('mypdf',$data,true);
 		
 		// composer require dompdf/dompdf -----------> useing command line dom pdf pakege 
 		$dompdf = new \Dompdf\Dompdf(); 

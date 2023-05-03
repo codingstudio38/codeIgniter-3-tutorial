@@ -4,7 +4,7 @@ date_default_timezone_set("Asia/Kolkata");
 class UserController extends CI_Controller {
 	public $google_client;
 	public $facebook;
-	public $facebook_helper;
+	public $facebook_helper; 
 	public function __construct(){ 
 		parent::__construct();
 		$this->load->model('UserModel');
@@ -24,7 +24,7 @@ class UserController extends CI_Controller {
         );
         $this->facebook_helper = $this->facebook->getRedirectLoginHelper();
 	}
-
+ 
     public function index()
 	{ 
 		UserNotLoggedIn();
@@ -32,7 +32,7 @@ class UserController extends CI_Controller {
 		//1- app\Libraries -> composer init
         //2- composer require google/apiclient:^2.12.1
         // facebook
-        //1- composer require facebook/graph-sdk
+        //1- composer require facebook/graph-sdk 
 		
 		$this->session->set_userdata('access_token',"");
 		$this->session->set_userdata('fb_access_token',"");
