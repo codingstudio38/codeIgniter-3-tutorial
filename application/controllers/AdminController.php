@@ -203,10 +203,10 @@
 			$data = array("users" => $result);
 			$this->load->view('multiple-db-view', $data);
 		}
-
+ 
 
 		public function  sendmail()
-		{
+		{ 
 			UserLoggedIn();
 			$this->load->library('email');
 			$config = array();
@@ -214,9 +214,9 @@
 			$config['mailpath'] = '/usr/sbin/sendmail';
 			$config['charset'] = 'iso-8859-1';
 			$config['wordwrap'] = TRUE;
-			$config['smtp_host'] = 'smtp.googlemail.com'; //'ssl://smtp.googlemail.com'
+			$config['smtp_host'] = 'ssl://smtp.googlemail.com'; //smtp.googlemail.com,'ssl://smtp.googlemail.com'
 			$config['smtp_user'] = 'onlinemessages0001@gmail.com';
-			$config['smtp_pass'] = 'wiuocjngxjitzntr';
+			$config['smtp_pass'] = 'fatjvdeebvbyezrg';
 			$config['smtp_port'] = 25; //587//25
 			$this->email->initialize($config);
 			$this->email->from("onlinemessages0001@gmail.com", 'Identification');
@@ -230,7 +230,7 @@
 			} else {
 				echo 0;
 			}
-		}
+		} 
 
 
 
